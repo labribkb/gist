@@ -56,6 +56,29 @@ $(function(){
     $("#updatetolerance").on("click",function(e){
         Module.changeTolerance($("#tolerance").slider("value"),true);
     });
+    $('#download-choice').dialog({
+        resizable:false,
+        autoOpen:false,
+        buttons:[
+            {
+                text:"As PNG Image",
+                click: function() {
+                    Module.download_render();
+                    $(this).dialog("close");
+                }
+            },{
+                text:"As Text file",
+                click: function() {
+                    Module.download_layout();
+                    $(this).dialog("close");
+                }
+            }
+        ],
+        modal:true
+    });
+    $('#download').on('click',function(){
+        $("#download-choice").dialog( "open" );
+    });
 });
 function onzoombox(n,dataurl,w,h){
     $("<h3>Zoom on "+n+" elements</h3><div><img src=\""+dataurl+"\" width="+w+" height="+h+" ></div>").appendTo('#accordion');
@@ -86,3 +109,17 @@ function adjust_best_message(R,best_tol,best_diam){
     $('#best_params #best_diam').text(`${d} pixels in visual space`);
     $('#best_params #best_tol').text(`${t} pixels in visual space`);
 }
+function download_canvas_image(){
+    let l = document.createElement('a');
+    l.href = Module.canvas.toDataURL();
+    l.download = 'gist.png';
+    l.click();
+}
+
+function download_layout(layout){
+    let l = document.createElement('a');
+    l.href = `data:text/plain,${layout}`;
+    l.download = 'gist.txt';
+    l.click();
+}
+
