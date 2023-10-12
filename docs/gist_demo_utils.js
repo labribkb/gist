@@ -43,7 +43,7 @@ $(function(){
     });
     $("#tolerance").slider({
         range:"min",
-        min:0,
+        min:1,
         max:32,
         value:3,
         slide:function(event,ui){
